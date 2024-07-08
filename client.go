@@ -79,7 +79,7 @@ func (c *Client) Hiscores(ctx context.Context, username string, mode GameMode, f
 		path = fmt.Sprintf("m=hiscore_oldschool%s/index_lite.ws?player=%s", mode, username)
 	}
 
-	data, err := c.sendRequest(ctx, path)
+	data, err := c.doRequest(ctx, path)
 	if err != nil {
 		return nil, fmt.Errorf("sending request: %w", err)
 	}
@@ -240,7 +240,7 @@ type Items struct {
 func (c *Client) Items(ctx context.Context, alpha string, page int) (*Items, error) {
 	path := fmt.Sprintf("m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=%s&page=%d", alpha, page)
 
-	data, err := c.sendRequest(ctx, path)
+	data, err := c.doRequest(ctx, path)
 	if err != nil {
 		return nil, fmt.Errorf("sending request: %w", err)
 	}
@@ -298,7 +298,7 @@ func (pc PercentChange) String() string {
 func (c *Client) Item(ctx context.Context, itemID int) (*Item, error) {
 	path := fmt.Sprintf("m=itemdb_oldschool/api/catalogue/detail.json?item=%d", itemID)
 
-	data, err := c.sendRequest(ctx, path)
+	data, err := c.doRequest(ctx, path)
 	if err != nil {
 		return nil, fmt.Errorf("sending request: %w", err)
 	}
@@ -320,7 +320,7 @@ type GraphData struct {
 func (c *Client) ItemGraph(ctx context.Context, itemID int) (*GraphData, error) {
 	path := fmt.Sprintf("m=itemdb_oldschool/api/graph/%d.json", itemID)
 
-	data, err := c.sendRequest(ctx, path)
+	data, err := c.doRequest(ctx, path)
 	if err != nil {
 		return nil, fmt.Errorf("sending request: %w", err)
 	}
@@ -332,7 +332,7 @@ func (c *Client) ItemGraph(ctx context.Context, itemID int) (*GraphData, error) 
 	return &graph, nil
 }
 
-func (c *Client) sendRequest(ctx context.Context, path string) ([]byte, error) {
+func (c *Client) doRequest(ctx context.Context, path string) ([]byte, error) {
 	url := fmt.Sprintf("%s/%s", c.baseURL, path)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)

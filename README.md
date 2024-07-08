@@ -1,6 +1,6 @@
 # osrsapi
 
-A Go library for interacting with the Old School Runescape API.
+A library for interacting with the Old School Runescape API.
 
 ## Usage
 
